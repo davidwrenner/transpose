@@ -4,7 +4,6 @@
 
 #include "Note.h"
 
-
 struct Chord {
   Note note;
   Accidental accidental;

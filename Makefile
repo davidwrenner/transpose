@@ -1,7 +1,7 @@
 EXECUTABLE	= transpose
-CMPL_SRCS	= src/Transpose.cpp src/Note.cpp src/Chord.cpp src/Scale.cpp
+CMPL_SRCS	= src/*.cpp
 TMPL_SRCS	= 
-HEADER_FILES    = src/Values.h src/Note.h src/Chord.h src/Scale.h
+HEADER_FILES    = src/*.h libs/argparse/argparse.hpp
 SPECIAL_FLAGS  = -std=c++17
 LIBS    =
 
