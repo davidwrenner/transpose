@@ -8,7 +8,7 @@ using std::string;
 
 Note parse_note(string str) {
   if (str.empty()) {
-    return Note::Invalid;
+    return Note::None;
   }
 
   switch (toupper(str[0])) {
@@ -32,9 +32,7 @@ Note parse_note(string str) {
 }
 
 Accidental parse_accidental(string str) {
-  if (str.empty()) {
-    return Accidental::Invalid;
-  } else if (str.size() == 1) {
+  if (str.size() <= 1) {
     return Accidental::Natural;
   }
 

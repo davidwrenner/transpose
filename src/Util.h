@@ -4,3 +4,5 @@ const int QUIT_INPUT_RECEIVED = 2;
 const int INVALID_CHORD_INPUT = 3;
 
 const int MOD = 12;
+
+const std::string QUIT_INPUT = "q";

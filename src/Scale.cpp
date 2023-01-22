@@ -26,33 +26,3 @@ map<unsigned int, pair<Note, Accidental> > Scale::default_name = {
     {6, {Note::E, Accidental::Flat}},     {7, {Note::E, Accidental::Natural}},
     {8, {Note::F, Accidental::Natural}},  {9, {Note::F, Accidental::Sharp}},
     {10, {Note::G, Accidental::Natural}}, {11, {Note::A, Accidental::Flat}}};
-
-// degree => num sharps
-map<unsigned int, unsigned int> Scale::sharps_per_key = {
-    {3, 0},   // CMaj
-    {10, 1},  // G
-    {5, 2},   // D
-    {0, 3},   // A
-    {7, 4},   // E
-    {2, 5},   // B
-    {9, 6},   // F#
-    {4, 7}    // C#
-};
-
-// degree => num flats
-map<unsigned int, unsigned int> Scale::flats_per_key = {
-    {3, 0},   // CMaj
-    {8, 1},   // F
-    {1, 2},   // Bb
-    {6, 3},   // Eb
-    {11, 4},  // Ab
-    {4, 5},   // Db
-    {9, 6},   // Gb
-    {2, 7}    // Cb
-};
-
-vector<Note> Scale::sharps_order = {Note::F, Note::C, Note::G, Note::D,
-                                    Note::A, Note::E, Note::B};
-
-vector<Note> Scale::flats_order = {Note::B, Note::E, Note::A, Note::D,
-                                   Note::G, Note::C, Note::F};

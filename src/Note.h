@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 
-enum class Note { A, B, C, D, E, F, G, Invalid };
+enum class Note { None, A, B, C, D, E, F, G, Invalid };
 enum class Accidental { Sharp, Flat, Natural, Invalid };
 
 Note parse_note(std::string);
