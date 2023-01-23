@@ -1,8 +1,9 @@
+
 #include "Chord.h"
 
 #include <string>
 
-#include "Note.h"
+#include "Key_T.h"
 
 using std::ostream;
 using std::string;

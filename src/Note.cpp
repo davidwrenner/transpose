@@ -1,10 +1,9 @@
-
+#include <string>
+#include <iostream>
 #include "Note.h"
 
-#include <string>
-
-using std::ostream;
 using std::string;
+using std::ostream;
 
 Note parse_note(string str) {
   if (str.empty()) {
@@ -28,21 +27,6 @@ Note parse_note(string str) {
       return Note::G;
     default:
       return Note::Invalid;
-  }
-}
-
-Accidental parse_accidental(string str) {
-  if (str.size() <= 1) {
-    return Accidental::Natural;
-  }
-
-  switch (str[1]) {
-    case '#':
-      return Accidental::Sharp;
-    case 'b':
-      return Accidental::Flat;
-    default:
-      return Accidental::Natural;
   }
 }
 
@@ -75,18 +59,3 @@ ostream& operator<<(ostream& o, const Note& note) {
   }
   return o;
 };
-
-ostream& operator<<(ostream& o, const Accidental& accidental) {
-  switch (accidental) {
-    case Accidental::Flat:
-      o << "♭";
-      break;
-    case Accidental::Sharp:
-      o << "♯";
-      break;
-    default:
-      o << "";
-      break;
-  }
-  return o;
-}
