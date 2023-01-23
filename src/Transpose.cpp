@@ -48,7 +48,9 @@ void reset_key_globals() {
   g_from_key = make_pair(Note::None, Accidental::Natural);
 }
 
-void warn(string str) { cout << "WARNING: " << str << endl; }
+void warn(string str) { cout << "[WARNING]: " << str << endl; }
+
+void fatal(string str) { cout << "[FATAL]: " << str << endl; }
 
 void parse_args(int argc, char* argv[]) {
   argparse::ArgumentParser program("transpose");
@@ -183,11 +185,12 @@ int get_input(vector<Chord>& chords) {
 }
 
 bool validate(vector<Chord>& chords) {
-  for (Chord c : chords) {
-    if (c.note == Note::Invalid)
+  for (unsigned long i = 0; i < chords.size(); ++i) {
+    Chord c = chords[i];
+    if (c.note == Note::Invalid || c.accidental == Accidental::Invalid) {
+      fatal("bad chord input in position " + std::to_string(i + 1));
       return false;
-    else if (c.accidental == Accidental::Invalid)
-      return false;
+    }
   }
   return true;
 }
@@ -233,7 +236,6 @@ int main(int argc, char* argv[]) {
   int transpose_distance = get_input(chords);
 
   if (!validate(chords)) {
-    cout << "Invalid chord input received" << endl;
     return INVALID_CHORD_INPUT;
   }
 
