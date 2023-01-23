@@ -1,8 +1,13 @@
 # adapted from https://github.com/github/gitignore/blob/main/C%2B%2B.gitignore
 
+# Dev
 .DS_Store
 .vscode
 *.dSYM
+
+# Testing
+input
+output
 
 # Prerequisites
 *.d
