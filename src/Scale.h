@@ -1,15 +1,45 @@
 #pragma once
 
-#include <map>
-#include <vector>
+#include <unordered_map>
 
+#include "Accidental.h"
+#include "Key_T.h"
 #include "Note.h"
 
-struct Scale {
-  static std::map<std::pair<Note, Accidental>, unsigned int> degree;
-  static std::map<unsigned int, std::pair<Note, Accidental> > default_name;
-  static std::map<unsigned int, unsigned int> sharps_per_key;
-  static std::map<unsigned int, unsigned int> flats_per_key;
-  static std::vector<Note> sharps_order;
-  static std::vector<Note> flats_order;
-};
+std::unordered_map<Key_T<Note, Accidental>, unsigned int,
+                   KeyHash<Note, Accidental> >
+    degree = {{Key_T<Note, Accidental>(Note::A, Accidental::Natural), 0},
+              {Key_T<Note, Accidental>(Note::A, Accidental::Sharp), 1},
+              {Key_T<Note, Accidental>(Note::B, Accidental::Flat), 1},
+              {Key_T<Note, Accidental>(Note::B, Accidental::Natural), 2},
+              {Key_T<Note, Accidental>(Note::B, Accidental::Sharp), 3},
+              {Key_T<Note, Accidental>(Note::C, Accidental::Flat), 2},
+              {Key_T<Note, Accidental>(Note::C, Accidental::Natural), 3},
+              {Key_T<Note, Accidental>(Note::C, Accidental::Sharp), 4},
+              {Key_T<Note, Accidental>(Note::D, Accidental::Flat), 4},
+              {Key_T<Note, Accidental>(Note::D, Accidental::Natural), 5},
+              {Key_T<Note, Accidental>(Note::D, Accidental::Sharp), 6},
+              {Key_T<Note, Accidental>(Note::E, Accidental::Flat), 6},
+              {Key_T<Note, Accidental>(Note::E, Accidental::Natural), 7},
+              {Key_T<Note, Accidental>(Note::E, Accidental::Sharp), 8},
+              {Key_T<Note, Accidental>(Note::F, Accidental::Flat), 7},
+              {Key_T<Note, Accidental>(Note::F, Accidental::Natural), 8},
+              {Key_T<Note, Accidental>(Note::F, Accidental::Sharp), 9},
+              {Key_T<Note, Accidental>(Note::G, Accidental::Flat), 9},
+              {Key_T<Note, Accidental>(Note::G, Accidental::Natural), 10},
+              {Key_T<Note, Accidental>(Note::G, Accidental::Sharp), 11},
+              {Key_T<Note, Accidental>(Note::A, Accidental::Flat), 11}};
+
+std::unordered_map<unsigned int, Key_T<Note, Accidental> > default_name = {
+    {0, Key_T<Note, Accidental>(Note::A, Accidental::Natural)},
+    {1, Key_T<Note, Accidental>(Note::B, Accidental::Flat)},
+    {2, Key_T<Note, Accidental>(Note::B, Accidental::Natural)},
+    {3, Key_T<Note, Accidental>(Note::C, Accidental::Natural)},
+    {4, Key_T<Note, Accidental>(Note::C, Accidental::Sharp)},
+    {5, Key_T<Note, Accidental>(Note::D, Accidental::Natural)},
+    {6, Key_T<Note, Accidental>(Note::E, Accidental::Flat)},
+    {7, Key_T<Note, Accidental>(Note::E, Accidental::Natural)},
+    {8, Key_T<Note, Accidental>(Note::F, Accidental::Natural)},
+    {9, Key_T<Note, Accidental>(Note::F, Accidental::Sharp)},
+    {10, Key_T<Note, Accidental>(Note::G, Accidental::Natural)},
+    {11, Key_T<Note, Accidental>(Note::A, Accidental::Flat)}};

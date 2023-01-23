@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+#include "Accidental.h"
+#include "Key_T.h"
 #include "Note.h"
 
 struct Chord {

@@ -5,7 +5,9 @@
 #include <vector>
 
 #include "../libs/argparse/argparse.hpp"
+#include "Accidental.h"
 #include "Chord.h"
+#include "Note.h"
 #include "Scale.h"
 #include "Util.h"
 
@@ -15,17 +17,17 @@ using std::cout;
 using std::endl;
 using std::ifstream;
 using std::istringstream;
-using std::make_pair;
 using std::ofstream;
-using std::pair;
 using std::runtime_error;
 using std::string;
 using std::vector;
 
 string g_input_file = "";
 string g_output_file = "";
-pair<Note, Accidental> g_to_key = make_pair(Note::None, Accidental::Natural);
-pair<Note, Accidental> g_from_key = make_pair(Note::None, Accidental::Natural);
+Key_T<Note, Accidental> g_to_key =
+    Key_T<Note, Accidental>(Note::None, Accidental::Natural);
+Key_T<Note, Accidental> g_from_key =
+    Key_T<Note, Accidental>(Note::None, Accidental::Natural);
 
 void print_info_message() {
   cout << "INPUT OPTIONS:" << endl;
@@ -44,8 +46,8 @@ void print_info_message() {
 }
 
 void reset_key_globals() {
-  g_to_key = make_pair(Note::None, Accidental::Natural);
-  g_from_key = make_pair(Note::None, Accidental::Natural);
+  g_to_key = Key_T<Note, Accidental>(Note::None, Accidental::Natural);
+  g_from_key = Key_T<Note, Accidental>(Note::None, Accidental::Natural);
 }
 
 void warn(string str) { cout << "[WARNING]: " << str << endl; }
@@ -105,16 +107,16 @@ void parse_args(int argc, char* argv[]) {
   }
   if (program.is_used("--to")) {
     string to_key = program.get<string>("--to");
-    g_to_key = make_pair(parse_note(to_key), parse_accidental(to_key));
-    if (g_to_key.first == Note::Invalid || g_to_key.first == Note::None) {
+    g_to_key = Key_T(parse_note(to_key), parse_accidental(to_key));
+    if (g_to_key.note == Note::Invalid || g_to_key.note == Note::None) {
       warn("bad key provided with --to. Reverting to defaults.");
       reset_key_globals();
     }
   }
   if (program.is_used("--from")) {
     string to_key = program.get<string>("--from");
-    g_from_key = make_pair(parse_note(to_key), parse_accidental(to_key));
-    if (g_from_key.first == Note::Invalid || g_from_key.first == Note::None) {
+    g_from_key = Key_T(parse_note(to_key), parse_accidental(to_key));
+    if (g_from_key.note == Note::Invalid || g_from_key.note == Note::None) {
       warn("bad key provided with --from. Reverting to defaults.");
       reset_key_globals();
     }
@@ -156,9 +158,9 @@ int get_input(vector<Chord>& chords) {
     input_line = is_using_file_input ? get_line(ifs) : get_line();
 
     if (!input_line.size()) {
-      if (g_from_key.first != Note::None && g_to_key.first != Note::None) {
+      if (g_from_key.note != Note::None && g_to_key.note != Note::None) {
         ifs.close();
-        return Scale::degree[g_to_key] - Scale::degree[g_from_key];
+        return degree[g_to_key] - degree[g_from_key];
       } else if (ifs.peek() == EOF) {
         warn("did not find transposition distance input in file");
         is_using_file_input = false;
@@ -198,15 +200,14 @@ bool validate(vector<Chord>& chords) {
 void transpose(vector<Chord>& chords, int distance) {
   for (unsigned long i = 0; i < chords.size(); ++i) {
     Chord old_chord = chords[i];
-    int curr_degree =
-        Scale::degree[make_pair(old_chord.note, old_chord.accidental)];
+    int curr_degree = degree[Key_T(old_chord.note, old_chord.accidental)];
     while (curr_degree + distance < 0) {
       curr_degree += MOD;
     }
     int new_degree = (curr_degree + distance) % MOD;
-    pair<Note, Accidental> new_chord = Scale::default_name[new_degree];
+    Key_T<Note, Accidental> new_key(default_name[new_degree]);
 
-    chords[i] = Chord(new_chord.first, new_chord.second, old_chord.suffix);
+    chords[i] = Chord(new_key.note, new_key.accidental, old_chord.suffix);
   }
 }
 
