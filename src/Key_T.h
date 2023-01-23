@@ -12,7 +12,6 @@ struct Key_T {
   Key_T(N, A);
 
   bool operator==(const Key_T &) const;
-  size_t operator()(Key_T<N, A> const &) const;
 };
 
 template <typename N, typename A>

@@ -25,29 +25,13 @@ using std::vector;
 string g_input_file = "";
 string g_output_file = "";
 Key_T<Note, Accidental> g_to_key =
-    Key_T<Note, Accidental>(Note::None, Accidental::Natural);
+    Key_T(Note::None, Accidental::Natural);
 Key_T<Note, Accidental> g_from_key =
-    Key_T<Note, Accidental>(Note::None, Accidental::Natural);
-
-void print_info_message() {
-  cout << "INPUT OPTIONS:" << endl;
-  cout << "- Major: A" << endl;
-  cout << "- Minor: Am" << endl;
-  cout << "- Sharp: A#" << endl;
-  cout << "- Flat: Ab" << endl;
-  cout << "- Diminished: Ad" << endl;
-  cout << "- Augmented: A+" << endl;
-  cout << endl;
-  cout << "EXAMPLE:" << endl;
-  cout << "> F#m G# C#m" << endl;
-  cout << "> +3" << endl;
-  cout << "Am B Em" << endl;
-  cout << endl;
-}
+    Key_T(Note::None, Accidental::Natural);
 
 void reset_key_globals() {
-  g_to_key = Key_T<Note, Accidental>(Note::None, Accidental::Natural);
-  g_from_key = Key_T<Note, Accidental>(Note::None, Accidental::Natural);
+  g_to_key = Key_T(Note::None, Accidental::Natural);
+  g_from_key = Key_T(Note::None, Accidental::Natural);
 }
 
 void warn(string str) { cout << "[WARNING]: " << str << endl; }
@@ -59,10 +43,6 @@ void parse_args(int argc, char* argv[]) {
   program.add_argument("-f", "--from")
       .help("specify the key of input chords, must be used with --to")
       .default_value<string>("");
-  program.add_argument("--info")
-      .help("display input options and examples")
-      .default_value(false)
-      .implicit_value(true);
   program.add_argument("-i", "--input")
       .help("specify file path containing chord inputs")
       .default_value<string>("");
@@ -83,10 +63,6 @@ void parse_args(int argc, char* argv[]) {
     std::exit(ARG_PARSE_ERROR);
   }
 
-  if (program["--info"] == true) {
-    cout << program << endl;
-    print_info_message();
-  }
   if (program.is_used("--input")) {
     g_input_file = program.get<string>("--input");
     if (g_input_file.empty()) {
